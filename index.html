@@ -168,6 +168,17 @@
     #grid td { min-width: 90px; max-width: 220px; height: 34px; padding: 0 8px; border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: cell; }
     #grid td.sel { outline: 2px solid var(--teal); outline-offset: -2px; background: var(--soft); }
 
+    /* Word-Style Document Editor for Evening Plans */
+    .word-doc-container { background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 16px; margin-top: 18px; }
+    .word-toolbar { display: flex; gap: 4px; flex-wrap: wrap; padding: 8px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px 10px 0 0; border-bottom: none; align-items: center; }
+    .word-toolbar button { background: var(--soft); border: 1px solid var(--line); border-radius: 6px; padding: 5px 10px; font-size: 13px; font-weight: 600; cursor: pointer; color: var(--ink); transition: background 0.15s; }
+    .word-toolbar button:hover { background: var(--teal); color: var(--teal-ink); border-color: var(--teal); }
+    .word-editor { background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-radius: 0 0 10px 10px; min-height: 280px; padding: 22px 26px; font-family: var(--f-body); font-size: 15px; line-height: 1.6; outline: none; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); }
+    .word-editor:focus { border-color: var(--teal); box-shadow: 0 0 0 2px rgba(11,110,101,0.2); }
+    .word-editor ul, .word-editor ol { padding-left: 24px; margin: 8px 0; }
+    .word-editor h2, .word-editor h3 { margin-top: 14px; margin-bottom: 6px; font-family: var(--f-display); }
+    .word-editor blockquote { border-left: 3px solid var(--teal); margin: 8px 0; padding-left: 12px; color: var(--muted); font-style: italic; }
+
     /* Modals & Login Overlay (Fixed Blur Isolation for WebKit) */
     .scrim[hidden], .toast[hidden] { display: none !important; }
     .scrim {
@@ -294,6 +305,12 @@
     var TAGS = ['Outdoors', 'Skills', 'Social', 'Community', 'Challenge', 'Wild card'];
     var DEFAULT_ADMIN_PIN = '1907';
 
+    var savedUser = null;
+    try {
+      var rawUser = localStorage.getItem('explorer_hub_user');
+      if (rawUser) savedUser = JSON.parse(rawUser);
+    } catch(e){}
+
     var S = {
       tab: 'programme',
       hubTab: 'chat',
@@ -305,7 +322,7 @@
       sheets: [],
       chat: [],
       notes: [],
-      user: null, // { name: 'John', isAdmin: false, id: '...' }
+      user: savedUser, // Persistent device login state loaded automatically
       openPlan: null,
       openSheet: null,
       sel: 'A1',
@@ -734,8 +751,29 @@
         '<label class="field">Start Time<input type="time" id="pStartTime" value="' + esc(p.startTime || '19:00') + '"></label>' +
       '</div>';
 
-      h += '<div style="margin-top:12px; display:flex; gap:6px; flex-wrap:wrap; align-items:center;">' +
-        '<span class="muted" style="font-size:13px; font-weight:600;">Load Template:</span>' +
+      h += '<div class="word-doc-container">' +
+        '<div class="row spread" style="margin-bottom:8px;">' +
+          '<h3 style="margin:0;">📄 Evening Write-Up & Freeform Notes</h3>' +
+          '<span class="muted" style="font-size:12px;">Edit continuously like a Word document</span>' +
+        '</div>' +
+        '<div class="word-toolbar">' +
+          '<button type="button" data-cmd="bold" title="Bold"><b>B</b></button>' +
+          '<button type="button" data-cmd="italic" title="Italic"><i>I</i></button>' +
+          '<button type="button" data-cmd="underline" title="Underline"><u>U</u></button>' +
+          '<button type="button" data-cmd="formatBlock" data-val="<h2>" title="Heading">H2</button>' +
+          '<button type="button" data-cmd="formatBlock" data-val="<h3>" title="Subheading">H3</button>' +
+          '<button type="button" data-cmd="insertUnorderedList" title="Bullet List">• List</button>' +
+          '<button type="button" data-cmd="insertOrderedList" title="Numbered List">1. List</button>' +
+          '<button type="button" data-cmd="hiliteColor" data-val="#fef08a" title="Highlight">Highlight</button>' +
+          '<button type="button" data-cmd="removeFormat" title="Clear Formatting">Clear</button>' +
+        '</div>' +
+        '<div class="word-editor" id="wordEditor" contenteditable="true" placeholder="Type evening notes, meeting minutes, briefing details or instructions here...">' +
+          (p.docNotes || '<h2>Meeting Overview</h2><p>Write your detailed session plans, leader duties, or meeting minutes freely here...</p>') +
+        '</div>' +
+      '</div>';
+
+      h += '<div style="margin-top:20px; display:flex; gap:6px; flex-wrap:wrap; align-items:center;">' +
+        '<span class="muted" style="font-size:13px; font-weight:600;">Quick Running Order Presets:</span>' +
         '<button class="btn small ghost" data-act="template" data-t="standard">Standard Meeting</button>' +
         '<button class="btn small ghost" data-act="template" data-t="hike">Night Hike</button>' +
         '<button class="btn small ghost" data-act="template" data-t="campfire">Campfire & Games</button>' +
@@ -757,7 +795,6 @@
           '<button class="btn small ghost danger s-del" data-act="step-del" data-i="' + i + '">×</button>' +
         '</div>';
 
-        // Add duration to start time for display
         if (curTime) {
           var parts = curTime.split(':').map(Number);
           var d = new Date(2000, 0, 1, parts[0], parts[1]);
@@ -793,9 +830,20 @@
       '</div>';
 
       if (S.hubTab === 'chat') {
-        var msgs = S.chat.slice().sort(function(a,b){ return (a.at||0) - (b.at||0); });
+        var startOfToday = new Date();
+        startOfToday.setHours(0, 0, 0, 0);
+        var midnightMs = startOfToday.getTime();
+
+        var msgs = S.chat.filter(function(m){
+          return (m.at || 0) >= midnightMs;
+        }).sort(function(a,b){ return (a.at||0) - (b.at||0); });
+
+        h += '<div class="notice" style="margin-bottom:10px; padding:8px 12px; font-size:12px; background:var(--soft); color:var(--muted); font-family:var(--f-mono);">' +
+          '💬 Live Chat (Messages automatically reset every night at midnight)' +
+        '</div>';
+
         h += '<div class="chat-box" id="chatBox">';
-        if (!msgs.length) h += '<div class="empty"><strong>No messages yet</strong>Start the conversation with your unit!</div>';
+        if (!msgs.length) h += '<div class="empty"><strong>No messages today</strong>Start today\'s chat conversation with your unit!</div>';
         msgs.forEach(function(m) {
           var isMine = S.user && m.byName === S.user.name;
           h += '<div class="chat-msg ' + (isMine ? 'mine' : '') + '">' +
@@ -915,6 +963,15 @@
     }
 
     document.addEventListener('click', async function(e) {
+      var cmdBtn = e.target.closest('button[data-cmd]');
+      if (cmdBtn) {
+        e.preventDefault();
+        var cmd = cmdBtn.dataset.cmd;
+        var val = cmdBtn.dataset.val || null;
+        document.execCommand(cmd, false, val);
+        return;
+      }
+
       var t = e.target.closest('[data-act]');
       if (!t) return;
       var act = t.dataset.act;
@@ -947,7 +1004,7 @@
 
       // Evenings
       if (act === 'plan-new') {
-        var newId = await apiAdd('plans', { title: 'New Evening Plan', date: iso(new Date()), steps: [], kit: [] });
+        var newId = await apiAdd('plans', { title: 'New Evening Plan', date: iso(new Date()), steps: [], kit: [], docNotes: '' });
         S.openPlan = newId;
       }
       if (act === 'plan-open') { S.openPlan = t.dataset.id; S.tab = 'evenings'; renderSoon(); }
@@ -965,13 +1022,15 @@
               duration: row.querySelector('.s-dur').value
             });
           });
+          var wordNotes = $('#wordEditor') ? $('#wordEditor').innerHTML : '';
           await apiUpdate('plans', S.openPlan, {
             title: $('#pTitle').value,
             date: $('#pDate').value,
             startTime: $('#pStartTime').value,
-            steps: steps
+            steps: steps,
+            docNotes: wordNotes
           });
-          toast('Plan updated successfully!');
+          toast('Plan and document notes saved successfully!');
         }
       }
       if (act === 'step-add') {
