@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Explorer Scouts Hub</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=DM+Mono:wght@400;500&family=Instrument+Sans:wght@400..700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=DM+Mono:wght@400;500&family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap">
   
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
@@ -22,20 +22,75 @@
     :root {
       color-scheme: light dark;
       box-sizing: border-box;
-      --bg: #EDF2F0; --surface: #FFFFFF; --ink: #0F2420; --muted: #58706A; --line: #D3DDD9; --soft: #E1ECE9;
-      --teal: #0B6E65; --teal-ink: #FFFFFF; --head: #0A4F49; --head-ink: #EAF6F3; --head-dim: #9CC7BF;
-      --flare: #D9480F; --flare-ink: #FFFFFF; --flare-soft: #FCE3D6; --warn: #B3261E;
-      --gold: #D97706; --gold-soft: #FEF3C7;
-      --k-meeting: #0B6E65; --k-outdoors: #3F7A2B; --k-camp: #B4531A; --k-social: #6B3FC4; --k-other: #5B6B73;
-      --f-display: 'Archivo', system-ui, sans-serif; --f-body: 'Instrument Sans', system-ui, sans-serif; --f-mono: 'DM Mono', ui-monospace, monospace;
+      /* Official UK Scouts Palette - Purple, Heritage & Clean White */
+      --scout-purple: #7413DC;
+      --scout-purple-dark: #540C93;
+      --scout-purple-light: #F3E8FC;
+      --scout-purple-border: #D8B4FE;
+      
+      --bg: #F8F7FA; 
+      --surface: #FFFFFF; 
+      --ink: #1E1035; 
+      --muted: #6B5C82; 
+      --line: #E3DCEB; 
+      --soft: #EFEAF5;
+      
+      --teal: #7413DC; 
+      --teal-ink: #FFFFFF; 
+      --head: #7413DC; 
+      --head-ink: #FFFFFF; 
+      --head-dim: #E3DCEB;
+      
+      --flare: #D9480F; 
+      --flare-ink: #FFFFFF; 
+      --flare-soft: #FCE3D6; 
+      --warn: #B3261E;
+      --gold: #D97706; 
+      --gold-soft: #FEF3C7;
+      
+      --k-meeting: #7413DC; 
+      --k-outdoors: #1B7A32; 
+      --k-camp: #C2410C; 
+      --k-social: #6B21A8; 
+      --k-other: #475569;
+      
+      --f-display: 'Archivo', system-ui, sans-serif; 
+      --f-body: 'Instrument Sans', system-ui, sans-serif; 
+      --f-mono: 'DM Mono', ui-monospace, monospace;
     }
+    
     @media (prefers-color-scheme: dark) {
       :root:not([data-theme="light"]) {
-        --bg: #0A1614; --surface: #122421; --ink: #E4EFEC; --muted: #8FA9A2; --line: #24403B; --soft: #173430;
-        --teal: #3FC4B4; --teal-ink: #06201C; --head: #0E2F2B; --head-ink: #E4F3F0; --head-dim: #7FB0A7;
-        --flare: #FF7A45; --flare-ink: #1A0B04; --flare-soft: #3A1E10; --warn: #FF8A80;
-        --gold: #FBBF24; --gold-soft: #382400;
-        --k-meeting: #3FC4B4; --k-outdoors: #8BC96F; --k-camp: #FF9A5E; --k-social: #B49BFF; --k-other: #9FB3BB;
+        --scout-purple: #9D4EDD;
+        --scout-purple-dark: #7413DC;
+        --scout-purple-light: #25123A;
+        --scout-purple-border: #522380;
+
+        --bg: #120A1F; 
+        --surface: #1B102C; 
+        --ink: #F5EFFC; 
+        --muted: #A697C0; 
+        --line: #311E4C; 
+        --soft: #231638;
+        
+        --teal: #9D4EDD; 
+        --teal-ink: #120A1F; 
+        --head: #1A0A2E; 
+        --head-ink: #F5EFFC; 
+        --head-dim: #C084FC;
+        
+        --flare: #FF7A45; 
+        --flare-ink: #1A0B04; 
+        --flare-soft: #3A1E10; 
+        --warn: #FF8A80;
+        --gold: #FBBF24; 
+        --gold-soft: #382400;
+        
+        --k-meeting: #C084FC; 
+        --k-outdoors: #8BC96F; 
+        --k-camp: #FF9A5E; 
+        --k-social: #E9D5FF; 
+        --k-other: #9FB3BB;
       }
     }
 
@@ -43,21 +98,108 @@
     * { box-sizing: border-box; }
     button, input, select, textarea { font: inherit; color: inherit; }
     button { cursor: pointer; }
-    :focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
-    .page { max-width: 860px; margin-inline: auto; padding-inline: 16px; }
+    :focus-visible { outline: 2px solid var(--scout-purple); outline-offset: 2px; }
+    .page { max-width: 880px; margin-inline: auto; padding-inline: 16px; }
+
+    /* Header - Grounded & Clean Official Scout Brand Styling */
+    .top { 
+      background: var(--head); 
+      color: var(--head-ink); 
+      position: relative; 
+      border-bottom: 3px solid var(--scout-purple-dark); 
+    }
+    .top .page { padding-block: 18px; position: relative; }
+    .header-bar { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+    .eyebrow { font-family: var(--f-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--head-dim); display: flex; align-items: center; gap: 8px; }
+    
+    /* Logo Image Styles */
+    .scout-logo-img {
+      height: 32px;
+      width: auto;
+      object-fit: contain;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .scout-logo-header {
+      height: 38px;
+      filter: brightness(0) invert(1); /* Pure white on purple header background */
+    }
+    .scout-logo-modal {
+      height: 64px;
+      margin-bottom: 12px;
+    }
+    .scout-logo-banner {
+      height: 28px;
+      filter: brightness(0) invert(1);
+    }
+
+    .unit { all: unset; display: flex; align-items: center; gap: 10px; font-family: var(--f-display); font-stretch: 110%; font-weight: 800; font-size: clamp(22px, 5vw, 32px); line-height: 1.1; margin-top: 6px; }
+    .user-badge { 
+      background: rgba(255,255,255,0.15); 
+      border: 1px solid rgba(255,255,255,0.25); 
+      border-radius: 8px; 
+      padding: 6px 12px; 
+      font-size: 13px; 
+      font-weight: 600; 
+      display: flex; 
+      align-items: center; 
+      gap: 8px; 
+    }
+    .user-badge .admin-tag { background: var(--gold); color: #000; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; }
+    
+    .nextup { margin-top: 14px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+    .nextup .when { background: #FFFFFF; color: var(--scout-purple-dark); font-family: var(--f-mono); font-weight: 700; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; padding: 4px 8px; border-radius: 4px; }
+    .nextup .what { font-weight: 700; }
+    .nextup .meta { color: var(--head-dim); font-family: var(--f-mono); font-size: 13px; }
+
+    /* Navigation */
+    .nav { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; background: var(--surface); border-top: 1px solid var(--line); display: flex; padding-bottom: env(safe-area-inset-bottom, 0px); }
+    .nav button { flex: 1; background: none; border: 0; padding: 10px 2px 8px; display: grid; justify-items: center; gap: 3px; color: var(--muted); font-size: 11px; font-weight: 600; }
+    .nav svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .nav button[aria-current="page"] { color: var(--scout-purple); font-weight: 700; }
+    @media (min-width: 760px) {
+      .nav { position: sticky; top: env(safe-area-inset-top, 0px); bottom: auto; padding-bottom: 0; justify-content: center; gap: 6px; border-top: 0; border-bottom: 1px solid var(--line); }
+      .nav button { flex: 0 0 auto; grid-auto-flow: column; align-items: center; gap: 8px; padding: 12px 16px; font-size: 14px; }
+      .nav button[aria-current="page"] { box-shadow: inset 0 -3px 0 var(--scout-purple); }
+    }
+    main { padding-block: 20px 110px; }
+    @media (min-width: 760px) { main { padding-block: 24px 60px; } }
+
+    /* Modals & Clean Overlays */
+    .scrim[hidden], .toast[hidden] { display: none !important; }
+    .scrim {
+      position: fixed; inset: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: center; padding: 16px;
+      background: rgba(18, 10, 31, 0.7);
+    }
+    .sheet {
+      position: relative; z-index: 1;
+      background: var(--surface); color: var(--ink);
+      width: 100%; max-width: 500px; max-height: 90vh; overflow-y: auto;
+      border-radius: 12px; padding: 24px; display: grid; gap: 16px;
+      border: 1px solid var(--line);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+
+    body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 16px; line-height: 1.45; margin: 0; padding: 0; }
+    * { box-sizing: border-box; }
+    button, input, select, textarea { font: inherit; color: inherit; }
+    button { cursor: pointer; }
+    :focus-visible { outline: 2px solid var(--scout-purple); outline-offset: 2px; }
+    .page { max-width: 880px; margin-inline: auto; padding-inline: 16px; }
 
     /* Header */
     .top { background: var(--head); color: var(--head-ink); position: relative; overflow: hidden;
-      background-image: repeating-radial-gradient(ellipse at 88% 130%, transparent 0 17px, rgba(255,255,255,.075) 17px 18px); }
+      background-image: radial-gradient(circle at 90% -20%, rgba(168, 85, 247, 0.25) 0%, transparent 60%); border-bottom: 2px solid var(--scout-purple-dark); }
     .top .page { padding-block: 18px; position: relative; }
     .header-bar { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
-    .eyebrow { font-family: var(--f-mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--head-dim); }
-    .unit { all: unset; display: block; font-family: var(--f-display); font-stretch: 125%; font-weight: 850; font-size: clamp(24px, 6vw, 36px); line-height: 1.05; margin-top: 4px; }
+    .eyebrow { font-family: var(--f-mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--head-dim); display: flex; align-items: center; gap: 6px; }
+    .unit { all: unset; display: flex; align-items: center; gap: 10px; font-family: var(--f-display); font-stretch: 125%; font-weight: 850; font-size: clamp(24px, 6vw, 36px); line-height: 1.05; margin-top: 4px; }
     .user-badge { background: rgba(255,255,255,0.12); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; padding: 6px 12px; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
     .user-badge .admin-tag { background: var(--gold); color: #000; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; }
     
     .nextup { margin-top: 14px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
-    .nextup .when { background: var(--flare); color: var(--flare-ink); font-family: var(--f-mono); font-weight: 600; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; padding: 4px 8px; border-radius: 6px; }
+    .nextup .when { background: var(--scout-purple); color: #fff; font-family: var(--f-mono); font-weight: 600; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; padding: 4px 8px; border-radius: 6px; }
     .nextup .what { font-weight: 600; }
     .nextup .meta { color: var(--head-dim); font-family: var(--f-mono); font-size: 13px; }
 
@@ -65,11 +207,11 @@
     .nav { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; background: var(--surface); border-top: 1px solid var(--line); display: flex; padding-bottom: env(safe-area-inset-bottom, 0px); }
     .nav button { flex: 1; background: none; border: 0; padding: 10px 2px 8px; display: grid; justify-items: center; gap: 3px; color: var(--muted); font-size: 11px; font-weight: 600; }
     .nav svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-    .nav button[aria-current="page"] { color: var(--teal); font-weight: 700; }
+    .nav button[aria-current="page"] { color: var(--scout-purple); font-weight: 700; }
     @media (min-width: 760px) {
       .nav { position: sticky; top: env(safe-area-inset-top, 0px); bottom: auto; padding-bottom: 0; justify-content: center; gap: 6px; border-top: 0; border-bottom: 1px solid var(--line); }
       .nav button { flex: 0 0 auto; grid-auto-flow: column; align-items: center; gap: 8px; padding: 12px 16px; font-size: 14px; }
-      .nav button[aria-current="page"] { box-shadow: inset 0 -3px 0 var(--teal); }
+      .nav button[aria-current="page"] { box-shadow: inset 0 -3px 0 var(--scout-purple); }
     }
     main { padding-block: 20px 110px; }
     @media (min-width: 760px) { main { padding-block: 24px 60px; } }
@@ -81,16 +223,18 @@
     .mono { font-family: var(--f-mono); }
     .row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
     .spread { justify-content: space-between; }
-    .btn { border: 1px solid var(--line); background: var(--surface); color: var(--ink); padding: 9px 14px; border-radius: 9px; font-weight: 600; font-size: 14px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
-    .btn.primary { background: var(--teal); border-color: var(--teal); color: var(--teal-ink); }
+    .btn { border: 1px solid var(--line); background: var(--surface); color: var(--ink); padding: 9px 14px; border-radius: 9px; font-weight: 600; font-size: 14px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; transition: all 0.15s ease; }
+    .btn:hover { border-color: var(--scout-purple-border); }
+    .btn.primary { background: var(--scout-purple); border-color: var(--scout-purple); color: #FFFFFF; }
+    .btn.primary:hover { background: var(--scout-purple-dark); }
     .btn.ghost { background: transparent; }
     .btn.danger { color: var(--warn); border-color: rgba(179,38,30,0.3); }
     .btn.small { padding: 5px 10px; font-size: 13px; }
     .pill { font-family: var(--f-mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; padding: 3px 8px; border-radius: 5px; background: var(--soft); color: var(--ink); font-weight: 500; }
-    .pill.flare { background: var(--flare-soft); color: var(--flare); }
+    .pill.flare { background: var(--scout-purple-light); color: var(--scout-purple); border: 1px solid var(--scout-purple-border); }
     .pill.gold { background: var(--gold-soft); color: var(--gold); }
-    .back { background: none; border: 0; padding: 4px 0 12px; color: var(--teal); font-weight: 600; font-size: 15px; }
-    .notice { background: var(--flare-soft); color: var(--ink); border-radius: 10px; padding: 12px 14px; margin-bottom: 16px; font-size: 14px; }
+    .back { background: none; border: 0; padding: 4px 0 12px; color: var(--scout-purple); font-weight: 600; font-size: 15px; display: inline-flex; align-items: center; gap: 4px; }
+    .notice { background: var(--scout-purple-light); color: var(--ink); border: 1px solid var(--scout-purple-border); border-radius: 10px; padding: 12px 14px; margin-bottom: 16px; font-size: 14px; }
     .empty { border: 1.5px dashed var(--line); border-radius: 12px; padding: 24px 16px; text-align: center; color: var(--muted); }
     .empty strong { display: block; color: var(--ink); font-size: 16px; margin-bottom: 4px; }
 
@@ -109,7 +253,7 @@
     .dnum { text-align: center; line-height: 1; }
     .dnum .wd { font-family: var(--f-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
     .dnum .n { font-family: var(--f-display); font-stretch: 125%; font-weight: 850; font-size: 28px; margin-top: 4px; display: block; }
-    .day.today .dnum .n { color: var(--flare); }
+    .day.today .dnum .n { color: var(--scout-purple); }
     .evs { display: grid; gap: 8px; min-width: 0; }
     .ev { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; }
     .ev .head { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
@@ -124,32 +268,199 @@
     /* Ideas */
     .chips { display: flex; gap: 6px; flex-wrap: wrap; margin: 12px 0; }
     .chip { border: 1px solid var(--line); background: transparent; border-radius: 999px; padding: 5px 12px; font-size: 13px; font-weight: 500; }
-    .chip[aria-pressed="true"] { background: var(--teal); border-color: var(--teal); color: var(--teal-ink); }
+    .chip[aria-pressed="true"] { background: var(--scout-purple); border-color: var(--scout-purple); color: #FFFFFF; }
     .idea { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px; display: grid; grid-template-columns: auto minmax(0,1fr); gap: 14px; margin-bottom: 10px; }
     .vote { border: 1px solid var(--line); background: var(--bg); border-radius: 10px; width: 48px; padding: 6px 0; display: grid; justify-items: center; font-family: var(--f-mono); font-size: 14px; align-self: start; }
-    .vote[aria-pressed="true"] { background: var(--teal); border-color: var(--teal); color: var(--teal-ink); }
+    .vote[aria-pressed="true"] { background: var(--scout-purple); border-color: var(--scout-purple); color: #FFFFFF; }
 
-    /* Evening Planner Enhanced */
+    /* Evening Planner & Word Document Editor */
     .plan-card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px; margin-bottom: 10px; text-align: left; display: grid; gap: 6px; }
     .plan-card .title { font-weight: 700; font-size: 17px; }
-    .step-row { display: grid; grid-template-columns: 80px 100px minmax(0,1fr) 90px 32px; gap: 8px; align-items: center; margin-bottom: 8px; }
+    .step-row { display: grid; grid-template-columns: 80px 110px minmax(0,1fr) 90px 60px 32px; gap: 8px; align-items: center; margin-bottom: 8px; }
     @media (max-width: 640px) {
-      .step-row { grid-template-columns: 70px 1fr 32px; grid-template-areas: "time type del" "desc desc desc" "lead lead lead"; background: var(--soft); padding: 8px; border-radius: 8px; }
+      .step-row { grid-template-columns: 70px 1fr 32px; grid-template-areas: "time type del" "desc desc desc" "lead dur dur"; background: var(--soft); padding: 8px; border-radius: 8px; }
       .step-row .s-time { grid-area: time; }
       .step-row .s-type { grid-area: type; }
       .step-row .s-desc { grid-area: desc; }
       .step-row .s-lead { grid-area: lead; }
+      .step-row .s-dur { grid-area: dur; }
       .step-row .s-del { grid-area: del; }
+    }
+
+    /* --- SCOUT WORD DOCUMENT STYLING --- */
+    .doc-wrapper {
+      background: var(--surface);
+      border: 1px solid var(--scout-purple-border);
+      border-radius: 16px;
+      overflow: hidden;
+      margin-top: 18px;
+      box-shadow: 0 4px 20px rgba(116, 19, 220, 0.08);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .doc-header-banner {
+      background: var(--head);
+      color: var(--head-ink);
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    }
+    .doc-header-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: 0.02em;
+    }
+    .scout-badge-icon {
+      width: 22px; height: 22px; fill: var(--head-dim); flex-shrink: 0;
+    }
+
+    /* Sticky Format Toolbar */
+    .doc-toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--soft);
+      border-bottom: 1px solid var(--line);
+      padding: 8px 12px;
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+      align-items: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    }
+    .doc-toolbar-group {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      padding-right: 6px;
+      margin-right: 6px;
+      border-right: 1px solid var(--line);
+    }
+    .doc-toolbar-group:last-child {
+      border-right: none;
+      margin-right: 0;
+      padding-right: 0;
+    }
+    .doc-tool-btn {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      min-width: 32px;
+      height: 32px;
+      padding: 0 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease;
+      user-select: none;
+    }
+    .doc-tool-btn:hover {
+      background: var(--scout-purple-light);
+      border-color: var(--scout-purple-border);
+      color: var(--scout-purple);
+    }
+    .doc-tool-btn.active {
+      background: var(--scout-purple);
+      border-color: var(--scout-purple);
+      color: #FFFFFF;
+    }
+
+    /* Editor Canvas / Paper */
+    .doc-paper-container {
+      background: var(--bg);
+      padding: 16px;
+      display: flex;
+      justify-content: center;
+      max-height: 600px;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+    .doc-editor {
+      background: var(--surface);
+      color: var(--ink);
+      width: 100%;
+      max-width: 800px;
+      min-height: 380px;
+      padding: 28px 32px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+      outline: none;
+      font-family: var(--f-body);
+      font-size: 16px;
+      line-height: 1.65;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      word-break: break-word;
+      white-space: normal;
+    }
+    
+    .doc-editor:focus {
+      border-color: var(--scout-purple);
+      box-shadow: 0 0 0 3px var(--scout-purple-light);
+    }
+
+    /* Document Typography Elements */
+    .doc-editor h1 { font-family: var(--f-display); font-size: 24px; font-weight: 800; color: var(--scout-purple); margin: 18px 0 10px; border-bottom: 2px solid var(--soft); padding-bottom: 4px; }
+    .doc-editor h2 { font-family: var(--f-display); font-size: 20px; font-weight: 700; color: var(--ink); margin: 16px 0 8px; }
+    .doc-editor h3 { font-family: var(--f-display); font-size: 17px; font-weight: 600; color: var(--muted); margin: 12px 0 6px; }
+    .doc-editor p { margin: 0 0 12px 0; }
+    .doc-editor ul, .doc-editor ol { padding-left: 24px; margin: 8px 0 12px 0; }
+    .doc-editor li { margin-bottom: 4px; }
+    .doc-editor blockquote {
+      border-left: 4px solid var(--scout-purple);
+      background: var(--scout-purple-light);
+      margin: 12px 0;
+      padding: 10px 16px;
+      border-radius: 0 8px 8px 0;
+      font-style: italic;
+      color: var(--ink);
+    }
+    .doc-editor hr {
+      border: none;
+      border-top: 2px dashed var(--scout-purple-border);
+      margin: 20px 0;
+    }
+    .doc-editor .scout-callout {
+      background: var(--soft);
+      border: 1px solid var(--scout-purple-border);
+      border-radius: 8px;
+      padding: 12px 14px;
+      margin: 12px 0;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .doc-footer {
+      background: var(--surface);
+      border-top: 1px solid var(--line);
+      padding: 8px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      font-family: var(--f-mono);
+      color: var(--muted);
     }
 
     /* Collaborative Space (Chat & Notes) */
     .hub-tabs { display: flex; border-bottom: 1px solid var(--line); margin-bottom: 16px; gap: 12px; }
     .hub-tab { background: none; border: none; padding: 8px 12px; font-weight: 600; color: var(--muted); border-bottom: 2px solid transparent; font-size: 15px; }
-    .hub-tab.active { color: var(--teal); border-bottom-color: var(--teal); }
+    .hub-tab.active { color: var(--scout-purple); border-bottom-color: var(--scout-purple); }
     
     .chat-box { display: flex; flex-direction: column; gap: 10px; max-height: 420px; overflow-y: auto; padding: 12px; background: var(--bg); border: 1px solid var(--line); border-radius: 12px; margin-bottom: 12px; }
     .chat-msg { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; max-width: 85%; align-self: flex-start; }
-    .chat-msg.mine { align-self: flex-end; background: var(--soft); border-color: var(--teal); }
+    .chat-msg.mine { align-self: flex-end; background: var(--scout-purple-light); border-color: var(--scout-purple-border); }
     .chat-msg .author-line { display: flex; gap: 6px; align-items: center; font-size: 12px; font-weight: 700; margin-bottom: 2px; }
     .chat-msg .time { font-size: 10px; font-family: var(--f-mono); color: var(--muted); font-weight: 400; margin-left: auto; }
 
@@ -166,29 +477,18 @@
     #grid th.rh { left: 0; top: auto; z-index: 1; min-width: 36px; text-align: center; }
     #grid th.corner { left: 0; z-index: 3; }
     #grid td { min-width: 90px; max-width: 220px; height: 34px; padding: 0 8px; border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: cell; }
-    #grid td.sel { outline: 2px solid var(--teal); outline-offset: -2px; background: var(--soft); }
+    #grid td.sel { outline: 2px solid var(--scout-purple); outline-offset: -2px; background: var(--soft); }
 
-    /* Word-Style Document Editor for Evening Plans */
-    .word-doc-container { background: var(--bg); border: 1px solid var(--line); border-radius: 12px; padding: 16px; margin-top: 18px; }
-    .word-toolbar { display: flex; gap: 4px; flex-wrap: wrap; padding: 8px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px 10px 0 0; border-bottom: none; align-items: center; }
-    .word-toolbar button { background: var(--soft); border: 1px solid var(--line); border-radius: 6px; padding: 5px 10px; font-size: 13px; font-weight: 600; cursor: pointer; color: var(--ink); transition: background 0.15s; }
-    .word-toolbar button:hover { background: var(--teal); color: var(--teal-ink); border-color: var(--teal); }
-    .word-editor { background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-radius: 0 0 10px 10px; min-height: 280px; padding: 22px 26px; font-family: var(--f-body); font-size: 15px; line-height: 1.6; outline: none; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); }
-    .word-editor:focus { border-color: var(--teal); box-shadow: 0 0 0 2px rgba(11,110,101,0.2); }
-    .word-editor ul, .word-editor ol { padding-left: 24px; margin: 8px 0; }
-    .word-editor h2, .word-editor h3 { margin-top: 14px; margin-bottom: 6px; font-family: var(--f-display); }
-    .word-editor blockquote { border-left: 3px solid var(--teal); margin: 8px 0; padding-left: 12px; color: var(--muted); font-style: italic; }
-
-    /* Modals & Login Overlay (Fixed Blur Isolation for WebKit) */
+    /* Modals & Login Overlay */
     .scrim[hidden], .toast[hidden] { display: none !important; }
     .scrim {
       position: fixed; inset: 0; z-index: 100;
       display: flex; align-items: center; justify-content: center; padding: 16px;
-      background: rgba(5, 15, 13, 0.75);
+      background: rgba(14, 9, 24, 0.75);
     }
     .scrim::before {
       content: ""; position: absolute; inset: 0; z-index: 0;
-      background: rgba(5, 15, 13, 0.5);
+      background: rgba(14, 9, 24, 0.5);
       -webkit-backdrop-filter: blur(8px);
       backdrop-filter: blur(8px);
       pointer-events: none;
@@ -209,12 +509,18 @@
 </head>
 <body>
 
+  <!-- Header -->
   <header class="top">
     <div class="page">
       <div class="header-bar">
         <div>
-          <div class="eyebrow" id="today"></div>
-          <div class="unit" id="unit">Explorer Scouts Hub</div>
+          <div class="eyebrow" id="today">
+            <span id="dateStr"></span>
+          </div>
+          <div class="unit" id="unit">
+            <img src="logo.png" alt="Scouts Logo" class="scout-logo-img scout-logo-header" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\' fill=\'white\'><path d=\'M50 5 C50 5 38 25 38 42 C38 52 45 58 50 60 C55 58 62 52 62 42 C62 25 50 5 50 5 Z M50 60 C42 58 20 54 12 38 C8 30 10 20 18 18 C26 16 32 25 36 35 C38 40 42 52 50 60 Z M50 60 C58 58 80 54 88 38 C92 30 90 20 82 18 C74 16 68 25 64 35 C62 40 58 52 50 60 Z\'/></svg>';">
+            <span>Explorer Scouts Hub</span>
+          </div>
         </div>
         <div class="user-badge" id="userBadge">
           <span id="userNameDisplay">Guest</span>
@@ -225,6 +531,7 @@
     </div>
   </header>
 
+  <!-- Navigation -->
   <nav class="nav" id="nav" aria-label="Sections">
     <button type="button" data-tab="programme"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg><span>Programme</span></button>
     <button type="button" data-tab="ideas"><svg viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></svg><span>Ideas</span></button>
@@ -235,21 +542,23 @@
 
   <main class="page" id="main"></main>
 
+  <!-- Login Modal -->
   <div class="scrim" id="loginScrim">
     <div class="sheet">
       <div style="text-align: center;">
-        <h2 style="font-size: 26px; margin-bottom: 6px;">Welcome to Explorer Hub</h2>
-        <p class="muted">Enter your first name to access the shared unit dashboard</p>
+        <img src="logo.png" alt="Scouts Logo" class="scout-logo-img scout-logo-modal" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\' fill=\'%237413DC\'><path d=\'M50 5 C50 5 38 25 38 42 C38 52 45 58 50 60 C55 58 62 52 62 42 C62 25 50 5 50 5 Z M50 60 C42 58 20 54 12 38 C8 30 10 20 18 18 C26 16 32 25 36 35 C38 40 42 52 50 60 Z M50 60 C58 58 80 54 88 38 C92 30 90 20 82 18 C74 16 68 25 64 35 C62 40 58 52 50 60 Z\'/></svg>';">
+        <h2 style="font-size: 24px; margin-bottom: 6px;">Explorer Scouts Hub</h2>
+        <p class="muted">Enter your name to join your unit's workspace</p>
       </div>
       <form id="loginForm">
         <label class="field">
           First Name Only
-          <input type="text" id="loginName" placeholder="e.g. John" required autocomplete="given-name" maxlength="25">
+          <input type="text" id="loginName" placeholder="e.g. Alex" required autocomplete="given-name" maxlength="25">
         </label>
         <div style="margin-top: 4px;">
           <label style="display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; cursor: pointer;">
-            <input type="checkbox" id="adminToggle" style="accent-color: var(--teal); width: 18px; height: 18px;">
-            Sign in as Admin / Leader (Requires PIN)
+            <input type="checkbox" id="adminToggle" style="accent-color: var(--scout-purple); width: 18px; height: 18px;">
+            Sign in as Leader / Admin
           </label>
         </div>
         <div id="pinField" style="display: none;">
@@ -276,7 +585,6 @@
     /* ---------- Helpers & Formatters ---------- */
     var pad = function(n){ return String(n).padStart(2,'0'); };
     var iso = function(d){ return d.getFullYear() + '-' + pad(d.getMonth()+1) + '-' + pad(d.getDate()); };
-    var parse = function(s){ var p = String(s).split('-').map(Number); return new Date(p[0], p[1]-1, p[2]); };
     var addDays = function(d, n){ var x = new Date(d); x.setDate(x.getDate() + n); return x; };
     var mondayOf = function(d){ var x = new Date(d.getFullYear(), d.getMonth(), d.getDate()); x.setDate(x.getDate() - ((x.getDay() + 6) % 7)); return x; };
     var fmt = function(d, o){ return new Intl.DateTimeFormat('en-GB', o).format(d); };
@@ -296,8 +604,7 @@
       if(m < 60) return m + 'm ago';
       var h = Math.floor(m/60);
       if(h < 24) return h + 'h ago';
-      var d = Math.floor(h/24);
-      return d + 'd ago';
+      return Math.floor(h/24) + 'd ago';
     }
 
     /* ---------- App State ---------- */
@@ -322,7 +629,7 @@
       sheets: [],
       chat: [],
       notes: [],
-      user: savedUser, // Persistent device login state loaded automatically
+      user: savedUser,
       openPlan: null,
       openSheet: null,
       sel: 'A1',
@@ -330,7 +637,7 @@
       sort: 'votes'
     };
 
-    /* ---------- Firebase Initialization ---------- */
+    /* ---------- Firebase SDK Setup ---------- */
     var db = null, auth = null, appId = 'explorers-hub-66be3';
     var unsubscribeList = [];
 
@@ -344,8 +651,7 @@
         projectId: "explorers-hub-66be3",
         storageBucket: "explorers-hub-66be3.firebasestorage.app",
         messagingSenderId: "1040380288637",
-        appId: "1:1040380288637:web:dd1bde6521da55f9a1db14",
-        measurementId: "G-MK2FSY24QD"
+        appId: "1:1040380288637:web:dd1bde6521da55f9a1db14"
       };
       appId = typeof __app_id !== 'undefined' ? __app_id : 'explorers-hub-66be3';
 
@@ -374,7 +680,6 @@
     function setupFirestoreListeners() {
       if (!db) return;
       var SDK = window.FirebaseSDK;
-
       var collections = ['events', 'ideas', 'comments', 'plans', 'sheets', 'chat', 'notes'];
       collections.forEach(function(col) {
         var ref = getColRef(col);
@@ -393,7 +698,7 @@
       });
     }
 
-    /* ---------- Persistence Wrapper ---------- */
+    /* ---------- Data Persistence Wrapper ---------- */
     async function apiAdd(col, data) {
       data.at = Date.now();
       data.byName = S.user ? S.user.name : 'Scout';
@@ -408,7 +713,6 @@
           console.error('Firestore Add Error:', e);
         }
       }
-      // Local fallback
       data.id = 'loc_' + Math.random().toString(36).substr(2, 9);
       if (!S[col]) S[col] = [];
       S[col].push(data);
@@ -438,27 +742,11 @@
       }
     }
 
-    async function apiSet(col, id, data) {
-      data.updatedAt = Date.now();
-      if (db && window.FirebaseSDK) {
-        try {
-          var docRef = window.FirebaseSDK.doc(db, 'artifacts', appId, 'public', 'data', col, id);
-          await window.FirebaseSDK.setDoc(docRef, data);
-          return;
-        } catch (e) { console.error('Firestore Set Error:', e); }
-      }
-      var idx = (S[col] || []).findIndex(function(x){ return x.id === id; });
-      data.id = id;
-      if (idx > -1) S[col][idx] = data; else S[col].push(data);
-      saveLocalFallback();
-      renderSoon();
-    }
-
     async function apiDelete(col, id) {
       if (db && window.FirebaseSDK) {
         try {
           var docRef = window.FirebaseSDK.doc(db, 'artifacts', appId, 'public', 'data', col, id);
-          await window.FirebaseSDK.deleteDoc(docRef, id);
+          await window.FirebaseSDK.deleteDoc(docRef);
           return;
         } catch (e) { console.error('Firestore Delete Error:', e); }
       }
@@ -489,7 +777,7 @@
     function toast(m) {
       var t = $('#toast');
       t.textContent = m; t.hidden = false;
-      setTimeout(function(){ t.hidden = true; }, 3500);
+      setTimeout(function(){ t.hidden = true; }, 3200);
     }
 
     /* ---------- Auth Logic ---------- */
@@ -511,7 +799,7 @@
 
     function updateUserUI() {
       if (!S.user) return;
-      $('#userNameDisplay').innerHTML = esc(S.user.name) + (S.user.isAdmin ? ' <span class="admin-tag">Admin</span>' : '');
+      $('#userNameDisplay').innerHTML = esc(S.user.name) + (S.user.isAdmin ? ' <span class="admin-tag">Leader</span>' : '');
     }
 
     $('#adminToggle').addEventListener('change', function(e) {
@@ -524,7 +812,7 @@
       var cleanName = formatFirstName(rawName);
 
       if (!cleanName) {
-        toast('Please enter a valid first name.');
+        toast('Please enter a valid name.');
         return;
       }
 
@@ -552,7 +840,7 @@
       renderSoon();
     });
 
-    /* ---------- Modals ---------- */
+    /* ---------- Modal Utilities ---------- */
     function openModal(html) {
       var s = $('#sheet'); s.innerHTML = html;
       var scrim = $('#scrim');
@@ -571,12 +859,11 @@
     $('#scrim').addEventListener('mousedown', function(e){ if(e.target.id === 'scrim') closeModal(); });
     document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && !$('#scrim').hidden) closeModal(); });
 
-    /* ---------- Navigation ---------- */
+    /* ---------- Nav Events ---------- */
     $('#nav').addEventListener('click', function(e) {
       var btn = e.target.closest('button[data-tab]');
       if (!btn) return;
       S.tab = btn.dataset.tab;
-      location.hash = S.tab;
       renderSoon();
     });
 
@@ -593,7 +880,7 @@
       });
     });
 
-    /* ---------- Scheduling Render ---------- */
+    /* ---------- Render Scheduler ---------- */
     var pending = false;
     function renderSoon() {
       if (pending) return;
@@ -606,13 +893,13 @@
     }
 
     function renderHeader() {
-      $('#today').textContent = fmt(new Date(), { weekday: 'short', day: 'numeric', month: 'short' });
+      $('#dateStr').textContent = fmt(new Date(), { weekday: 'short', day: 'numeric', month: 'short' });
       var today = iso(new Date());
       var nx = S.events.filter(function(e){ return e.date >= today; }).sort(function(a,b){ return (a.date+(a.start||'')).localeCompare(b.date+(b.start||'')); })[0];
       
       $('#nextup').innerHTML = nx
-        ? '<div class="nextup"><span class="when">Next Up</span><span class="what">' + esc(nx.title) + '</span><span class="meta">' + esc(nx.date) + (nx.start ? ' · ' + esc(nx.start) : '') + '</span></div>'
-        : '<div class="nextup"><span class="meta">Nothing scheduled on the programme yet.</span></div>';
+        ? '<div class="nextup"><span class="when">Next Meeting</span><span class="what">' + esc(nx.title) + '</span><span class="meta">' + esc(nx.date) + (nx.start ? ' · ' + esc(nx.start) : '') + '</span></div>'
+        : '<div class="nextup"><span class="meta">No upcoming sessions scheduled on the programme.</span></div>';
 
       document.querySelectorAll('#nav button').forEach(function(b) {
         if (b.dataset.tab === S.tab) b.setAttribute('aria-current', 'page');
@@ -620,7 +907,6 @@
       });
     }
 
-    /* ---------- View Switcher ---------- */
     function renderMain() {
       if (!S.user) return;
       var h = '';
@@ -650,7 +936,7 @@
         h += '<section class="day' + (ds === today ? ' today' : '') + '"><div class="dnum"><span class="wd">' + fmt(d, {weekday:'short'}) + '</span><span class="n">' + d.getDate() + '</span></div><div class="evs">';
         
         if (!evs.length) {
-          h += '<div class="muted" style="font-size:13px; padding-top:4px;">Nothing planned <button class="btn small ghost" style="color:var(--teal)" data-act="ev-add" data-date="' + ds + '">+ Add</button></div>';
+          h += '<div class="muted" style="font-size:13px; padding-top:4px;">Nothing planned <button class="btn small ghost" style="color:var(--scout-purple)" data-act="ev-add" data-date="' + ds + '">+ Add</button></div>';
         }
         
         evs.forEach(function(e) {
@@ -678,7 +964,7 @@
       }).join('') + '</div>';
 
       var list = S.ideas.filter(function(i){ return S.filter === 'All' || i.tag === S.filter; });
-      if (!list.length) h += '<div class="empty"><strong>No ideas suggested yet</strong>Be the first to share an activity or hike idea!</div>';
+      if (!list.length) h += '<div class="empty"><strong>No ideas suggested yet</strong>Share a camp, activity or outdoor venture idea!</div>';
 
       list.forEach(function(i) {
         var votes = i.votes || [];
@@ -687,7 +973,7 @@
 
         h += '<article class="idea">' +
           '<button class="vote" data-act="idea-vote" data-id="' + esc(i.id) + '" aria-pressed="' + !!mine + '">▲ <span>' + votes.length + '</span></button>' +
-          '<div style="min-width:0"><span class="pill">' + esc(i.tag || 'Wild card') + '</span>' +
+          '<div style="min-width:0"><span class="pill flare">' + esc(i.tag || 'Wild card') + '</span>' +
           '<div style="font-weight:700; font-size:16px; margin-top:4px;">' + esc(i.title) + '</div>' +
           (i.detail ? '<div style="margin-top:2px; font-size:14px;">' + esc(i.detail) + '</div>' : '') +
           '<div class="muted" style="font-size:12px; margin-top:4px;">By ' + esc(i.byName || 'Scout') + ' · ' + ago(i.at) + '</div>' +
@@ -704,7 +990,7 @@
       return h;
     }
 
-    /* ---------- 3. ENHANCED EVENING PLANNER ---------- */
+    /* ---------- 3. EVENING PLANNER & SCOUT COLLABORATIVE DOC ---------- */
     function viewEvenings() {
       if (S.openPlan) {
         var p = S.plans.find(function(x){ return x.id === S.openPlan; });
@@ -712,21 +998,21 @@
         S.openPlan = null;
       }
 
-      var h = '<div class="row spread"><h2>Evening Planner</h2><button class="btn primary" data-act="plan-new">+ New Evening Plan</button></div>';
-      h += '<p class="muted" style="margin: 6px 0 16px;">Structure your unit night with timeline steps, leader assignments, kit tracking, and copyable summaries.</p>';
+      var h = '<div class="row spread"><h2>Evening Planner & Scout Docs</h2><button class="btn primary" data-act="plan-new">+ New Plan</button></div>';
+      h += '<p class="muted" style="margin: 6px 0 16px;">Structure unit meetings, assign activities, manage kit, and draft collaborative evening notes.</p>';
 
-      if (!S.plans.length) h += '<div class="empty"><strong>No plans created</strong>Use templates or start a blank plan for your meeting night.</div>';
+      if (!S.plans.length) h += '<div class="empty"><strong>No evening plans created yet</strong>Click "+ New Plan" to set up a meeting or event write-up.</div>';
 
       S.plans.forEach(function(p) {
         var totalMins = (p.steps || []).reduce(function(acc, s){ return acc + (parseInt(s.duration) || 0); }, 0);
         h += '<div class="plan-card">' +
           '<div class="row spread">' +
-            '<div class="title">' + esc(p.title || 'Untitled Evening') + '</div>' +
+            '<div class="title">' + esc(p.title || 'Untitled Evening Plan') + '</div>' +
             '<span class="pill flare">' + esc(p.date || 'Date TBC') + '</span>' +
           '</div>' +
           '<div class="muted" style="font-size:13px;">' + (p.steps || []).length + ' Steps · ' + totalMins + ' Total Mins · Created by ' + esc(p.byName || 'Leader') + '</div>' +
           '<div class="row" style="margin-top:8px;">' +
-            '<button class="btn small primary" data-act="plan-open" data-id="' + esc(p.id) + '">Open & Edit</button>' +
+            '<button class="btn small primary" data-act="plan-open" data-id="' + esc(p.id) + '">Open Document & Plan</button>' +
             '<button class="btn small ghost" data-act="plan-copy" data-id="' + esc(p.id) + '">Copy Summary</button>' +
             '<button class="btn small ghost danger" data-act="plan-del" data-id="' + esc(p.id) + '">Delete</button>' +
           '</div></div>';
@@ -740,43 +1026,75 @@
       var kit = p.kit || [];
       var kitDoneCount = kit.filter(function(k){ return k.done; }).length;
 
-      var h = '<button class="back" data-act="plan-back">‹ Back to all plans</button>';
+      var h = '<button class="back" data-act="plan-back">‹ Back to plans</button>';
       h += '<div class="row spread" style="align-items:flex-start;">' +
-        '<input type="text" id="pTitle" value="' + esc(p.title || '') + '" placeholder="Evening Title..." style="font-size:22px; font-weight:800; border:none; background:transparent; border-bottom:2px solid var(--line); border-radius:0;">' +
-        '<button class="btn small primary" data-act="plan-save">Save Changes</button>' +
+        '<input type="text" id="pTitle" value="' + esc(p.title || '') + '" placeholder="Evening Title..." style="font-size:22px; font-weight:800; border:none; background:transparent; border-bottom:2px solid var(--scout-purple-border); border-radius:0;">' +
+        '<button class="btn small primary" data-act="plan-save">Save All Changes</button>' +
       '</div>';
 
       h += '<div class="two" style="margin-top:14px;">' +
-        '<label class="field">Date<input type="date" id="pDate" value="' + esc(p.date || '') + '"></label>' +
+        '<label class="field">Meeting Date<input type="date" id="pDate" value="' + esc(p.date || '') + '"></label>' +
         '<label class="field">Start Time<input type="time" id="pStartTime" value="' + esc(p.startTime || '19:00') + '"></label>' +
       '</div>';
 
-      h += '<div class="word-doc-container">' +
-        '<div class="row spread" style="margin-bottom:8px;">' +
-          '<h3 style="margin:0;">📄 Evening Write-Up & Freeform Notes</h3>' +
-          '<span class="muted" style="font-size:12px;">Edit continuously like a Word document</span>' +
+      /* --- SCOUT WORD-STYLE DOCUMENT EDITOR --- */
+      var defaultDocContent = '<h1>' + esc(p.title || 'Meeting Plan Overview') + '</h1><p>Type your Scout meeting briefing, safety notes, patrol instructions, or activity write-up freely here...</p>';
+      
+      h += '<div class="doc-wrapper">' +
+        '<div class="doc-header-banner">' +
+          '<div class="doc-header-title">' +
+            '<img src="logo.png" alt="Scouts Logo" class="scout-logo-img scout-logo-banner" onerror="this.onerror=null; this.src=\'data:image/svg+xml;utf8,<svg xmlns=\\\'http://www.w3.org/2000/svg\\\' viewBox=\\\'0 0 100 100\\\' fill=\\\'white\\\"><path d=\\\'M50 5 C50 5 38 25 38 42 C38 52 45 58 50 60 C55 58 62 52 62 42 C62 25 50 5 50 5 Z M50 60 C42 58 20 54 12 38 C8 30 10 20 18 18 C26 16 32 25 36 35 C38 40 42 52 50 60 Z M50 60 C58 58 80 54 88 38 C92 30 90 20 82 18 C74 16 68 25 64 35 C62 40 58 52 50 60 Z\\\'/></svg>\';">' +
+            '<span>Collaborative Scout Document Editor</span>' +
+          '</div>' +
+          '<span class="pill" style="background:rgba(255,255,255,0.2); color:#fff;">Live Auto-Sync</span>' +
         '</div>' +
-        '<div class="word-toolbar">' +
-          '<button type="button" data-cmd="bold" title="Bold"><b>B</b></button>' +
-          '<button type="button" data-cmd="italic" title="Italic"><i>I</i></button>' +
-          '<button type="button" data-cmd="underline" title="Underline"><u>U</u></button>' +
-          '<button type="button" data-cmd="formatBlock" data-val="<h2>" title="Heading">H2</button>' +
-          '<button type="button" data-cmd="formatBlock" data-val="<h3>" title="Subheading">H3</button>' +
-          '<button type="button" data-cmd="insertUnorderedList" title="Bullet List">• List</button>' +
-          '<button type="button" data-cmd="insertOrderedList" title="Numbered List">1. List</button>' +
-          '<button type="button" data-cmd="hiliteColor" data-val="#fef08a" title="Highlight">Highlight</button>' +
-          '<button type="button" data-cmd="removeFormat" title="Clear Formatting">Clear</button>' +
+
+        '<div class="doc-toolbar" id="docToolbar">' +
+          '<div class="doc-toolbar-group">' +
+            '<button type="button" class="doc-tool-btn" data-cmd="formatBlock" data-val="<h1>" title="Heading 1"><b>H1</b></button>' +
+            '<button type="button" class="doc-tool-btn" data-cmd="formatBlock" data-val="<h2>" title="Heading 2"><b>H2</b></button>' +
+            '<button type="button" class="doc-tool-btn" data-cmd="formatBlock" data-val="<h3>" title="Heading 3"><b>H3</b></button>' +
+            '<button type="button" class="doc-tool-btn" data-cmd="formatBlock" data-val="<p>" title="Paragraph">P</button>' +
+          '</div>' +
+
+          '<div class="doc-toolbar-group">' +
+            '<button type="button" class="doc-tool-btn" data-cmd="bold" title="Bold (Ctrl+B)"><b>B</b></button>' +
+            '<button type="button" class="doc-tool-btn" data-cmd="italic" title="Italic (Ctrl+I)"><i>I</i></button>' +
+            '<button type="button" class="doc-tool-btn" data-cmd="underline" title="Underline (Ctrl+U)"><u>U</u></button>' +
+            '<button type="button" class="doc-tool-btn" data-cmd="strikeThrough" title="Strikethrough"><s>S</s></button>' +
+          '</div>' +
+
+          '<div class="doc-toolbar-group">' +
+            '<button type="button" class="doc-tool-btn" data-cmd="insertUnorderedList" title="Bullet List">• List</button>' +
+            '<button type="button" class="doc-tool-btn" data-cmd="insertOrderedList" title="Numbered List">1. List</button>' +
+            '<button type="button" class="doc-tool-btn" data-cmd="formatBlock" data-val="<blockquote>" title="Scout Quote">” Quote</button>' +
+          '</div>' +
+
+          '<div class="doc-toolbar-group">' +
+            '<button type="button" class="doc-tool-btn" data-cmd="hiliteColor" data-val="#F3E8FC" title="Highlight Scout Purple">🟪 Highlight</button>' +
+            '<button type="button" class="doc-tool-btn" data-cmd="insertHorizontalRule" title="Horizontal Divider">— Line</button>' +
+            '<button type="button" class="doc-tool-btn" data-cmd="removeFormat" title="Clear Formatting">🧹 Clear</button>' +
+          '</div>' +
         '</div>' +
-        '<div class="word-editor" id="wordEditor" contenteditable="true" placeholder="Type evening notes, meeting minutes, briefing details or instructions here...">' +
-          (p.docNotes || '<h2>Meeting Overview</h2><p>Write your detailed session plans, leader duties, or meeting minutes freely here...</p>') +
+
+        '<div class="doc-paper-container">' +
+          '<div class="doc-editor" id="wordEditor" contenteditable="true" spellcheck="true">' +
+            (p.docNotes || defaultDocContent) +
+          '</div>' +
+        '</div>' +
+
+        '<div class="doc-footer">' +
+          '<span id="docStats">0 words · 0 chars</span>' +
+          '<span>Edited by ' + esc(p.lastEditedBy || p.byName || 'Leader') + '</span>' +
         '</div>' +
       '</div>';
 
-      h += '<div style="margin-top:20px; display:flex; gap:6px; flex-wrap:wrap; align-items:center;">' +
-        '<span class="muted" style="font-size:13px; font-weight:600;">Quick Running Order Presets:</span>' +
-        '<button class="btn small ghost" data-act="template" data-t="standard">Standard Meeting</button>' +
-        '<button class="btn small ghost" data-act="template" data-t="hike">Night Hike</button>' +
-        '<button class="btn small ghost" data-act="template" data-t="campfire">Campfire & Games</button>' +
+      /* --- RUNNING ORDER TIMELINE --- */
+      h += '<div style="margin-top:24px; display:flex; gap:6px; flex-wrap:wrap; align-items:center;">' +
+        '<span class="muted" style="font-size:13px; font-weight:600;">Presets:</span>' +
+        '<button class="btn small ghost" data-act="template" data-t="standard">Standard Night</button>' +
+        '<button class="btn small ghost" data-act="template" data-t="hike">Night Navigation</button>' +
+        '<button class="btn small ghost" data-act="template" data-t="campfire">Campfire Session</button>' +
       '</div>';
 
       h += '<h3>Running Order Timeline</h3>';
@@ -785,13 +1103,13 @@
       
       steps.forEach(function(s, i) {
         h += '<div class="step-row">' +
-          '<div class="s-time mono" style="font-size:12px; font-weight:600; color:var(--teal);">' + curTime + '</div>' +
-          '<select class="s-type" data-i="' + i + '" data-f="type">' +
-            ['Warmup', 'Main', 'Badge Work', 'Reflection', 'Closing'].map(function(t){ return '<option value="' + t + '" ' + (s.type === t ? 'selected' : '') + '>' + t + '</option>'; }).join('') +
+          '<div class="s-time mono" style="font-size:12px; font-weight:600; color:var(--scout-purple);">' + curTime + '</div>' +
+          '<select class="s-type" data-i="' + i + '">' +
+            ['Warmup', 'Main Activity', 'Badge Work', 'Reflection', 'Closing'].map(function(t){ return '<option value="' + t + '" ' + (s.type === t ? 'selected' : '') + '>' + t + '</option>'; }).join('') +
           '</select>' +
-          '<input class="s-desc" data-i="' + i + '" data-f="desc" placeholder="Activity details..." value="' + esc(s.desc || '') + '">' +
-          '<input class="s-lead" data-i="' + i + '" data-f="lead" placeholder="Leader" value="' + esc(s.lead || '') + '">' +
-          '<input type="number" class="s-dur" data-i="' + i + '" data-f="duration" placeholder="Mins" value="' + (s.duration || 15) + '" style="width:60px;">' +
+          '<input class="s-desc" data-i="' + i + '" placeholder="Activity details..." value="' + esc(s.desc || '') + '">' +
+          '<input class="s-lead" data-i="' + i + '" placeholder="Leader" value="' + esc(s.lead || '') + '">' +
+          '<input type="number" class="s-dur" data-i="' + i + '" placeholder="Mins" value="' + (s.duration || 15) + '">' +
           '<button class="btn small ghost danger s-del" data-act="step-del" data-i="' + i + '">×</button>' +
         '</div>';
 
@@ -806,22 +1124,21 @@
 
       h += '<button class="btn small primary" data-act="step-add" style="margin-top:6px;">+ Add Activity Step</button>';
 
+      /* --- KIT & EQUIPMENT --- */
       h += '<h3>Kit & Equipment Checklist (' + kitDoneCount + '/' + kit.length + ' Packed)</h3>';
       kit.forEach(function(k, i) {
         h += '<div class="row" style="margin-bottom:6px;">' +
-          '<input type="checkbox" data-act="kit-toggle" data-i="' + i + '" ' + (k.done ? 'checked' : '') + ' style="width:18px; height:18px;">' +
+          '<input type="checkbox" data-act="kit-toggle" data-i="' + i + '" ' + (k.done ? 'checked' : '') + ' style="width:18px; height:18px; accent-color:var(--scout-purple);">' +
           '<input style="flex:1; ' + (k.done ? 'text-decoration:line-through; opacity:0.6;' : '') + '" data-act="kit-text" data-i="' + i + '" value="' + esc(k.text) + '">' +
           '<button class="btn small ghost danger" data-act="kit-del" data-i="' + i + '">×</button>' +
         '</div>';
       });
 
-      h += '<form data-form="kit-add" class="row" style="margin-top:6px;"><input name="text" placeholder="Add kit item..." required><button class="btn small primary">Add Kit</button></form>';
-      
-      h += '<div style="margin-top:20px; font-size:12px; color:var(--muted);">Last edited by ' + esc(p.lastEditedBy || p.byName || 'Leader') + '</div>';
+      h += '<form data-form="kit-add" class="row" style="margin-top:6px;"><input name="text" placeholder="Add equipment item..." required><button class="btn small primary">Add Kit</button></form>';
       return h;
     }
 
-    /* ---------- 4. COLLABORATIVE SPACE (CHAT & NOTES) ---------- */
+    /* ---------- 4. COLLABORATIVE HUB ---------- */
     function viewHub() {
       var h = '<div class="row spread"><h2>Unit Collaborative Hub</h2></div>';
       h += '<div class="hub-tabs">' +
@@ -830,34 +1147,33 @@
       '</div>';
 
       if (S.hubTab === 'chat') {
-        var startOfToday = new Date();
-        startOfToday.setHours(0, 0, 0, 0);
+        var startOfToday = new Date(); startOfToday.setHours(0, 0, 0, 0);
         var midnightMs = startOfToday.getTime();
 
         var msgs = S.chat.filter(function(m){
           return (m.at || 0) >= midnightMs;
         }).sort(function(a,b){ return (a.at||0) - (b.at||0); });
 
-        h += '<div class="notice" style="margin-bottom:10px; padding:8px 12px; font-size:12px; background:var(--soft); color:var(--muted); font-family:var(--f-mono);">' +
-          '💬 Live Chat (Messages automatically reset every night at midnight)' +
+        h += '<div class="notice" style="margin-bottom:10px; font-size:12px; font-family:var(--f-mono);">' +
+          '💬 Live Unit Chat (Messages automatically refresh daily)' +
         '</div>';
 
         h += '<div class="chat-box" id="chatBox">';
-        if (!msgs.length) h += '<div class="empty"><strong>No messages today</strong>Start today\'s chat conversation with your unit!</div>';
+        if (!msgs.length) h += '<div class="empty"><strong>No messages sent today</strong>Say hi to start today\'s chat!</div>';
         msgs.forEach(function(m) {
           var isMine = S.user && m.byName === S.user.name;
           h += '<div class="chat-msg ' + (isMine ? 'mine' : '') + '">' +
-            '<div class="author-line"><span>' + esc(m.byName) + '</span> ' + (m.byRole === 'Leader' ? '<span class="pill gold" style="font-size:9px;">Leader</span>' : '') + '<span class="time">' + ago(m.at) + '</span></div>' +
+            '<div class="author-line"><span>' + esc(m.byName) + '</span> ' + (m.byRole === 'Leader' ? '<span class="pill flare" style="font-size:9px;">Leader</span>' : '') + '<span class="time">' + ago(m.at) + '</span></div>' +
             '<div>' + esc(m.text) + '</div>' +
           '</div>';
         });
         h += '</div>';
         h += '<form data-form="chat-send" class="row"><input name="text" placeholder="Type a message to the unit..." required autocomplete="off"><button class="btn primary">Send</button></form>';
       } else {
-        h += '<div class="row spread" style="margin-bottom:12px;"><span class="muted" style="font-size:14px;">Pinned notices and collaborative documentation</span><button class="btn primary small" data-act="note-add">+ Add Note</button></div>';
+        h += '<div class="row spread" style="margin-bottom:12px;"><span class="muted" style="font-size:14px;">Pinned notices and camp updates</span><button class="btn primary small" data-act="note-add">+ Add Note</button></div>';
         var notes = S.notes.slice().sort(function(a,b){ return (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0); });
         
-        if (!notes.length) h += '<div class="empty"><strong>Noticeboard is clear</strong>Add camp rules, emergency info, or patrol lists here.</div>';
+        if (!notes.length) h += '<div class="empty"><strong>Noticeboard is empty</strong>Post camp guidelines, emergency contacts, or kit lists.</div>';
         
         h += '<div class="notes-grid">';
         notes.forEach(function(n) {
@@ -887,9 +1203,9 @@
       }
 
       var h = '<div class="row spread"><h2>Shared Spreadsheets</h2><button class="btn primary" data-act="sheet-new">+ New Sheet</button></div>';
-      h += '<p class="muted" style="margin: 6px 0 16px;">Collaborative budgets and attendance grids. <i>(Admin PIN required to delete sheets)</i></p>';
+      h += '<p class="muted" style="margin: 6px 0 16px;">Collaborative budgets and attendance rosters.</p>';
 
-      if (!S.sheets.length) h += '<div class="empty"><strong>No spreadsheets created</strong>Create an expedition budget or camp attendance grid.</div>';
+      if (!S.sheets.length) h += '<div class="empty"><strong>No spreadsheets yet</strong>Create an expedition budget or camp attendance roster.</div>';
       else {
         h += '<div class="cards">';
         S.sheets.forEach(function(s) {
@@ -898,8 +1214,8 @@
             '<div class="muted mono" style="font-size:12px;">' + (s.rows||15) + 'x' + (s.cols||6) + ' · Updated ' + ago(s.at) + '</div>' +
             '<div class="muted" style="font-size:11px;">Created by ' + esc(s.byName || 'Leader') + '</div>' +
             '<div class="row" style="margin-top:8px;">' +
-              '<button class="btn small primary" data-act="sheet-open" data-id="' + esc(s.id) + '">Open</button>' +
-              '<button class="btn small ghost danger" data-act="sheet-del-check" data-id="' + esc(s.id) + '">Delete Sheet</button>' +
+              '<button class="btn small primary" data-act="sheet-open" data-id="' + esc(s.id) + '">Open Sheet</button>' +
+              '<button class="btn small ghost danger" data-act="sheet-del-check" data-id="' + esc(s.id) + '">Delete</button>' +
             '</div>' +
           '</div>';
         });
@@ -910,8 +1226,8 @@
     }
 
     function viewSheetDetail(sh) {
-      var h = '<button class="back" data-act="sheet-back">‹ Back to all sheets</button>';
-      h += '<div class="row spread"><input type="text" id="shName" value="' + esc(sh.name) + '" style="font-size:20px; font-weight:700; border:none; background:transparent; border-bottom:2px solid var(--line); border-radius:0;">' +
+      var h = '<button class="back" data-act="sheet-back">‹ Back to sheets</button>';
+      h += '<div class="row spread"><input type="text" id="shName" value="' + esc(sh.name) + '" style="font-size:20px; font-weight:700; border:none; background:transparent; border-bottom:2px solid var(--scout-purple-border); border-radius:0;">' +
         '<button class="btn small primary" data-act="sheet-save">Save Name</button>' +
       '</div>';
 
@@ -922,7 +1238,7 @@
       '</div>';
 
       h += '<div class="row" style="margin-top:10px;"><span class="mono" style="font-weight:700; background:var(--soft); padding:6px 10px; border-radius:6px;" id="cellRef">' + S.sel + '</span>' +
-        '<input type="text" id="cellVal" style="flex:1;" placeholder="Enter text, number, or formula (=SUM(A1:A5))">' +
+        '<input type="text" id="cellVal" style="flex:1;" placeholder="Enter text or number...">' +
       '</div>';
 
       h += '<div class="gridwrap" style="margin-top:12px;"><table id="grid"></table></div>';
@@ -953,22 +1269,54 @@
       el.innerHTML = h + '</tbody>';
     }
 
-    /* ---------- Event Bindings ---------- */
+    /* ---------- Stats Helper for Document Editor ---------- */
+    function updateDocStats() {
+      var ed = $('#wordEditor');
+      var stats = $('#docStats');
+      if (!ed || !stats) return;
+      var txt = ed.innerText || ed.textContent || '';
+      var words = txt.trim() ? txt.trim().split(/\s+/).length : 0;
+      var chars = txt.length;
+      stats.textContent = words + ' words · ' + chars + ' characters';
+    }
+
+    /* ---------- Event Attachments ---------- */
     function bindEvents() {
       if (S.tab === 'sheets' && S.openSheet) drawGrid();
       if (S.tab === 'hub' && S.hubTab === 'chat') {
         var box = $('#chatBox');
         if (box) box.scrollTop = box.scrollHeight;
       }
+      if (S.tab === 'evenings' && S.openPlan) {
+        updateDocStats();
+      }
     }
 
+    var autoSaveTimeout = null;
+
+    document.addEventListener('input', function(e) {
+      if (e.target.id === 'wordEditor') {
+        updateDocStats();
+        // Debounced auto-save to plan state
+        clearTimeout(autoSaveTimeout);
+        autoSaveTimeout = setTimeout(function() {
+          var p = S.plans.find(function(x){ return x.id === S.openPlan; });
+          if (p) {
+            apiUpdate('plans', S.openPlan, { docNotes: e.target.innerHTML });
+          }
+        }, 800);
+      }
+    });
+
     document.addEventListener('click', async function(e) {
+      // Document Editor Tool Buttons
       var cmdBtn = e.target.closest('button[data-cmd]');
       if (cmdBtn) {
         e.preventDefault();
         var cmd = cmdBtn.dataset.cmd;
         var val = cmdBtn.dataset.val || null;
         document.execCommand(cmd, false, val);
+        updateDocStats();
         return;
       }
 
@@ -981,13 +1329,13 @@
       if (act === 'week-next') { S.weekStart = addDays(S.weekStart, 7); renderSoon(); }
       if (act === 'week-now') { S.weekStart = mondayOf(new Date()); renderSoon(); }
       if (act === 'ev-add') {
-        openModal('<h2>Add Event</h2><form data-form="ev-save"><label class="field">Title<input name="title" required></label><label class="field">Date<input type="date" name="date" value="' + (t.dataset.date || iso(new Date())) + '" required></label><label class="field">Start Time<input type="time" name="start" value="19:00"></label><label class="field">Category<select name="kind"><option value="meeting">Weekly Meeting</option><option value="outdoors">Outdoors</option><option value="camp">Camp</option><option value="social">Social</option></select></label><button class="btn primary">Add to Programme</button></form>');
+        openModal('<h2>Add Session</h2><form data-form="ev-save"><label class="field">Title<input name="title" required></label><label class="field">Date<input type="date" name="date" value="' + (t.dataset.date || iso(new Date())) + '" required></label><label class="field">Start Time<input type="time" name="start" value="19:00"></label><label class="field">Category<select name="kind"><option value="meeting">Weekly Meeting</option><option value="outdoors">Outdoors</option><option value="camp">Camp</option><option value="social">Social</option></select></label><button class="btn primary">Add to Programme</button></form>');
       }
       if (act === 'ev-del') { await apiDelete('events', t.dataset.id); }
 
       // Ideas
       if (act === 'idea-add') {
-        openModal('<h2>Suggest an Idea</h2><form data-form="idea-save"><label class="field">Idea Title<input name="title" required></label><label class="field">Tag<select name="tag">' + TAGS.map(function(x){return '<option value="'+x+'">'+x+'</option>';}).join('') + '</select></label><label class="field">Details<textarea name="detail" rows="3"></textarea></label><button class="btn primary">Post Idea</button></form>');
+        openModal('<h2>Suggest Activity Idea</h2><form data-form="idea-save"><label class="field">Idea Title<input name="title" required></label><label class="field">Tag<select name="tag">' + TAGS.map(function(x){return '<option value="'+x+'">'+x+'</option>';}).join('') + '</select></label><label class="field">Details<textarea name="detail" rows="3"></textarea></label><button class="btn primary">Post Idea</button></form>');
       }
       if (act === 'idea-vote') {
         var id = t.dataset.id;
@@ -1004,7 +1352,7 @@
 
       // Evenings
       if (act === 'plan-new') {
-        var newId = await apiAdd('plans', { title: 'New Evening Plan', date: iso(new Date()), steps: [], kit: [], docNotes: '' });
+        var newId = await apiAdd('plans', { title: 'New Meeting Plan', date: iso(new Date()), steps: [], kit: [], docNotes: '' });
         S.openPlan = newId;
       }
       if (act === 'plan-open') { S.openPlan = t.dataset.id; S.tab = 'evenings'; renderSoon(); }
@@ -1037,7 +1385,7 @@
         var p = S.plans.find(function(x){ return x.id === S.openPlan; });
         if (p) {
           p.steps = p.steps || [];
-          p.steps.push({ type: 'Main', desc: '', lead: S.user.name, duration: 15 });
+          p.steps.push({ type: 'Main Activity', desc: '', lead: S.user.name, duration: 15 });
           await apiUpdate('plans', p.id, { steps: p.steps });
         }
       }
@@ -1057,19 +1405,19 @@
           if (templ === 'standard') {
             tSteps = [
               { type: 'Warmup', desc: 'Game: Dodgeball / Flag Run', lead: S.user.name, duration: 15 },
-              { type: 'Main', desc: 'Pioneering / Map Reading Skills', lead: 'Leader', duration: 45 },
+              { type: 'Main Activity', desc: 'Pioneering / Map Reading Skills', lead: 'Leader', duration: 45 },
               { type: 'Reflection', desc: 'Logbook update & Notices', lead: S.user.name, duration: 15 }
             ];
           } else if (templ === 'hike') {
             tSteps = [
               { type: 'Warmup', desc: 'Gear check & Route brief', lead: S.user.name, duration: 15 },
-              { type: 'Main', desc: 'Night Navigation Trail', lead: 'All', duration: 75 },
+              { type: 'Main Activity', desc: 'Night Navigation Trail', lead: 'All', duration: 75 },
               { type: 'Closing', desc: 'Debrief and Hot Chocolate', lead: S.user.name, duration: 15 }
             ];
           } else {
             tSteps = [
               { type: 'Warmup', desc: 'Campfire lighting setup', lead: S.user.name, duration: 20 },
-              { type: 'Main', desc: 'Traditional Campfire Songs & Skits', lead: 'Explorers', duration: 50 },
+              { type: 'Main Activity', desc: 'Traditional Campfire Songs & Skits', lead: 'Explorers', duration: 50 },
               { type: 'Closing', desc: 'Flag lowering and reflection', lead: S.user.name, duration: 10 }
             ];
           }
@@ -1079,7 +1427,7 @@
       if (act === 'plan-copy') {
         var p = S.plans.find(function(x){ return x.id === t.dataset.id; });
         if (p) {
-          var txt = '📅 Evening Plan: ' + (p.title||'Meeting') + '\nDate: ' + (p.date||'TBC') + '\n\nAgenda:\n' +
+          var txt = '⚜️ Evening Plan: ' + (p.title||'Meeting') + '\nDate: ' + (p.date||'TBC') + '\n\nAgenda:\n' +
             (p.steps||[]).map(function(s){ return '• [' + s.type + '] ' + s.desc + ' (' + s.duration + 'm)'; }).join('\n');
           navigator.clipboard.writeText(txt);
           toast('Plan summary copied to clipboard!');
@@ -1102,7 +1450,7 @@
         }
       }
 
-      // Collaborative Hub
+      // Hub
       if (act === 'hub-tab') { S.hubTab = t.dataset.v; renderSoon(); }
       if (act === 'note-add') {
         openModal('<h2>Add Notice</h2><form data-form="note-save"><label class="field">Notice Title<input name="title" required></label><label class="field">Content<textarea name="body" rows="4" required></textarea></label><button class="btn primary">Post Notice</button></form>');
@@ -1113,7 +1461,7 @@
       }
       if (act === 'note-del') { await apiDelete('notes', t.dataset.id); }
 
-      // Sheets Admin Delete Protection
+      // Sheets
       if (act === 'sheet-new') {
         var newShId = await apiAdd('sheets', { name: 'New Spreadsheet', rows: 15, cols: 6, cells: {} });
         S.openSheet = newShId;
@@ -1123,7 +1471,7 @@
       if (act === 'sheet-del-check') {
         var sheetId = t.dataset.id;
         if (!S.user.isAdmin) {
-          openModal('<h2>Admin Protection</h2><p>Deleting spreadsheets requires an Admin PIN Code.</p><form data-form="admin-auth" data-sheet-id="' + sheetId + '"><label class="field">Admin PIN<input type="password" name="pin" required></label><button class="btn primary danger">Authorize & Delete</button></form>');
+          openModal('<h2>Admin Verification</h2><p>Deleting spreadsheets requires an Admin PIN Code.</p><form data-form="admin-auth" data-sheet-id="' + sheetId + '"><label class="field">Admin PIN<input type="password" name="pin" required></label><button class="btn primary danger">Authorize & Delete</button></form>');
         } else {
           await apiDelete('sheets', sheetId);
           S.openSheet = null;
@@ -1192,7 +1540,7 @@
           await apiDelete('sheets', form.dataset.sheetId);
           closeModal();
           S.openSheet = null;
-          toast('Admin verified. Spreadsheet deleted.');
+          toast('Admin verified. Sheet deleted.');
         } else {
           toast('Incorrect Admin PIN.');
         }
