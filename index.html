@@ -53,7 +53,7 @@
     .header-bar { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
     .eyebrow { font-family: var(--f-mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--head-dim); }
     .unit { all: unset; display: block; font-family: var(--f-display); font-stretch: 125%; font-weight: 850; font-size: clamp(24px, 6vw, 36px); line-height: 1.05; margin-top: 4px; }
-    .user-badge { background: rgba(255,255,255,0.12); backdrop-filter: blur(4px); border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; padding: 6px 12px; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+    .user-badge { background: rgba(255,255,255,0.12); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; padding: 6px 12px; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
     .user-badge .admin-tag { background: var(--gold); color: #000; font-size: 10px; font-weight: 800; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; }
     
     .nextup { margin-top: 14px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
@@ -95,7 +95,7 @@
     .empty strong { display: block; color: var(--ink); font-size: 16px; margin-bottom: 4px; }
 
     input[type=text], input[type=password], input[type=date], input[type=time], input[type=number], select, textarea {
-      width: 100%; min-width: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 9px; padding: 9px 11px; font-size: 15px;
+      width: 100%; min-width: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 9px; padding: 9px 11px; font-size: 15px; color: var(--ink);
     }
     .field { display: grid; gap: 5px; font-size: 13px; font-weight: 600; color: var(--muted); min-width: 0; }
     .field input, .field select, .field textarea { color: var(--ink); font-weight: 400; }
@@ -168,9 +168,30 @@
     #grid td { min-width: 90px; max-width: 220px; height: 34px; padding: 0 8px; border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: cell; }
     #grid td.sel { outline: 2px solid var(--teal); outline-offset: -2px; background: var(--soft); }
 
-    /* Modals & Login Overlay */
-    .scrim { position: fixed; inset: 0; z-index: 100; background: rgba(5,15,13,.65); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; padding: 16px; }
-    .sheet { background: var(--surface); color: var(--ink); width: 100%; max-width: 520px; max-height: 90vh; overflow-y: auto; border-radius: 18px; padding: 24px; display: grid; gap: 16px; border: 1px solid var(--line); }
+    /* Modals & Login Overlay (Fixed Blur Isolation for WebKit) */
+    .scrim[hidden], .toast[hidden] { display: none !important; }
+    .scrim {
+      position: fixed; inset: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: center; padding: 16px;
+      background: rgba(5, 15, 13, 0.75);
+    }
+    .scrim::before {
+      content: ""; position: absolute; inset: 0; z-index: 0;
+      background: rgba(5, 15, 13, 0.5);
+      -webkit-backdrop-filter: blur(8px);
+      backdrop-filter: blur(8px);
+      pointer-events: none;
+    }
+    .sheet {
+      position: relative; z-index: 1;
+      transform: translateZ(0); -webkit-transform: translateZ(0);
+      background: var(--surface); color: var(--ink);
+      width: 100%; max-width: 520px; max-height: 90vh; overflow-y: auto;
+      border-radius: 18px; padding: 24px; display: grid; gap: 16px;
+      border: 1px solid var(--line);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+      -webkit-backdrop-filter: none; backdrop-filter: none;
+    }
     .toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(84px + env(safe-area-inset-bottom,0px)); z-index: 120; background: var(--ink); color: var(--bg); padding: 10px 18px; border-radius: 10px; font-size: 14px; font-weight: 600; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
     @media (min-width: 760px) { .toast { bottom: 28px; } }
   </style>
@@ -460,10 +481,13 @@
       if (saved) {
         try { S.user = JSON.parse(saved); } catch(e){}
       }
+      var loginScrim = $('#loginScrim');
       if (!S.user) {
-        $('#loginScrim').style.display = 'flex';
+        loginScrim.removeAttribute('hidden');
+        loginScrim.style.display = 'flex';
       } else {
-        $('#loginScrim').style.display = 'none';
+        loginScrim.setAttribute('hidden', '');
+        loginScrim.style.display = 'none';
         updateUserUI();
       }
     }
@@ -503,7 +527,9 @@
       };
 
       localStorage.setItem('explorer_hub_user', JSON.stringify(S.user));
-      $('#loginScrim').style.display = 'none';
+      var loginScrim = $('#loginScrim');
+      loginScrim.setAttribute('hidden', '');
+      loginScrim.style.display = 'none';
       updateUserUI();
       toast('Welcome, ' + S.user.name + '!');
       renderSoon();
@@ -511,12 +537,20 @@
 
     /* ---------- Modals ---------- */
     function openModal(html) {
-      var s = $('#sheet'); s.innerHTML = html; $('#scrim').hidden = false;
+      var s = $('#sheet'); s.innerHTML = html;
+      var scrim = $('#scrim');
+      scrim.removeAttribute('hidden');
+      scrim.style.display = 'flex';
       var f = s.querySelector('input:not([type=hidden]), textarea, select');
       if (f && !('ontouchstart' in window)) f.focus();
       return s;
     }
-    function closeModal() { $('#scrim').hidden = true; $('#sheet').innerHTML = ''; }
+    function closeModal() {
+      var scrim = $('#scrim');
+      scrim.setAttribute('hidden', '');
+      scrim.style.display = 'none';
+      $('#sheet').innerHTML = '';
+    }
     $('#scrim').addEventListener('mousedown', function(e){ if(e.target.id === 'scrim') closeModal(); });
     document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && !$('#scrim').hidden) closeModal(); });
 
@@ -536,7 +570,9 @@
         $('#loginName').value = '';
         $('#adminToggle').checked = false;
         $('#pinField').style.display = 'none';
-        $('#loginScrim').style.display = 'flex';
+        var loginScrim = $('#loginScrim');
+        loginScrim.removeAttribute('hidden');
+        loginScrim.style.display = 'flex';
       });
     });
 
@@ -794,7 +830,7 @@
       return h;
     }
 
-    /* ---------- 5. SHEETS VIEW (ADMIN DELETE SUPPORT) ---------- */
+    /* ---------- 5. SHEETS VIEW ---------- */
     function viewSheets() {
       if (S.openSheet) {
         var sh = S.sheets.find(function(s){ return s.id === S.openSheet; });
